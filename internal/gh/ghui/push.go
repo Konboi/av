@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"reflect"
 	"strings"
 
 	"emperror.dev/errors"
@@ -581,5 +582,5 @@ func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
 	log.Println("local")
 	log.Println("prMeta:")
 
-	return local == prMeta
+	return reflect.DeepEqual(local, prMeta)
 }
