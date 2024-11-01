@@ -106,6 +106,7 @@ type GitHubPushModel struct {
 }
 
 func (vm *GitHubPushModel) Init() tea.Cmd {
+	log.Println("GitHubPushModel.Init")
 	vm.calculatingCandidates = true
 	return tea.Batch(vm.spinner.Tick, vm.calculateChangedBranches)
 }
