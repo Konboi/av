@@ -146,7 +146,7 @@ type stackSyncViewModel struct {
 }
 
 func (vm *stackSyncViewModel) Init() tea.Cmd {
-	log.Println("init")
+
 	if vm.askingStackSyncChange && os.Getenv("AV_STACK_SYNC_CHANGE_NO_ASK") != "1" {
 		vm.changeNoticePrompt = uiutils.NewPromptModel(
 			changeNoticePrompt,
@@ -158,7 +158,7 @@ func (vm *stackSyncViewModel) Init() tea.Cmd {
 }
 
 func (vm *stackSyncViewModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	log.Println("update")
+
 	switch msg := msg.(type) {
 	case spinner.TickMsg:
 		var cmds []tea.Cmd
@@ -172,7 +172,7 @@ func (vm *stackSyncViewModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			vm.restackModel, cmd = vm.restackModel.Update(msg)
 			cmds = append(cmds, cmd)
 		}
-		log.Println("modal is exists?: ", vm.githubFetchModel != nil)
+
 		if vm.githubPushModel != nil {
 			var cmd tea.Cmd
 			vm.githubPushModel, cmd = vm.githubPushModel.Update(msg)
