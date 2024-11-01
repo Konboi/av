@@ -111,6 +111,7 @@ func (vm *GitHubPushModel) Init() tea.Cmd {
 }
 
 func (vm *GitHubPushModel) Update(msg tea.Msg) (*GitHubPushModel, tea.Cmd) {
+	log.Println("GitHubPushModel.Update")
 	switch msg := msg.(type) {
 	case *GitHubPushProgress:
 		if msg.candidateCalculationDone {
