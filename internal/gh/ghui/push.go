@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"reflect"
 	"strings"
 
 	"emperror.dev/errors"
@@ -106,11 +107,13 @@ type GitHubPushModel struct {
 }
 
 func (vm *GitHubPushModel) Init() tea.Cmd {
+	log.Println("GitHubPushModel.Init")
 	vm.calculatingCandidates = true
 	return tea.Batch(vm.spinner.Tick, vm.calculateChangedBranches)
 }
 
 func (vm *GitHubPushModel) Update(msg tea.Msg) (*GitHubPushModel, tea.Cmd) {
+	log.Println("GitHubPushModel.Update")
 	switch msg := msg.(type) {
 	case *GitHubPushProgress:
 		if msg.candidateCalculationDone {
@@ -323,6 +326,7 @@ func (vm *GitHubPushModel) runGitPush() error {
 
 func (vm *GitHubPushModel) getPRs() (map[plumbing.ReferenceName]*gh.PullRequest, error) {
 	prs := map[plumbing.ReferenceName]*gh.PullRequest{}
+	log.Println("candidate:", len(vm.pushCandidates))
 	for _, branch := range vm.pushCandidates {
 		avbr, _ := vm.db.ReadTx().Branch(branch.branch.Short())
 		if avbr.PullRequest != nil {
@@ -548,9 +552,10 @@ func createPRMetadata(branch meta.Branch, vm *GitHubPushModel) actions.PRMetadat
 func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
 	log.Println("isDifferencePRMetadata")
 	local := createPRMetadata(avbr, vm)
-	log.Println("local:", local)
+	log.Println("local!!")
 
 	prs, err := vm.getPRs()
+	log.Println("prs!!:", len(prs))
 	if err != nil {
 		return true
 	}
@@ -574,8 +579,8 @@ func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
 		return true
 	}
 
-	log.Println("local", local)
-	log.Println("prMeta:", prMeta)
+	log.Println("local")
+	log.Println("prMeta:")
 
-	return local == prMeta
+	return reflect.DeepEqual(local, prMeta)
 }
