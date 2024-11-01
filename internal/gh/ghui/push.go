@@ -562,6 +562,7 @@ func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
 
 	var pr *gh.PullRequest
 	for _, p := range prs {
+		log.Println("pull request id:", avbr.PullRequest.ID, " p.id:", p.ID)
 		if avbr.PullRequest.ID == p.ID {
 			pr = p
 			break
