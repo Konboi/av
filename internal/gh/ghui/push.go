@@ -553,6 +553,7 @@ func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
 	log.Println("local!!")
 
 	prs, err := vm.getPRs()
+	log.Println("prs!!:", len(prs))
 	if err != nil {
 		return true
 	}
