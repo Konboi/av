@@ -325,6 +325,7 @@ func (vm *GitHubPushModel) runGitPush() error {
 
 func (vm *GitHubPushModel) getPRs() (map[plumbing.ReferenceName]*gh.PullRequest, error) {
 	prs := map[plumbing.ReferenceName]*gh.PullRequest{}
+	log.Println("candidate:", len(vm.pushCandidates))
 	for _, branch := range vm.pushCandidates {
 		avbr, _ := vm.db.ReadTx().Branch(branch.branch.Short())
 		if avbr.PullRequest != nil {
