@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -145,6 +147,7 @@ type stackSyncViewModel struct {
 }
 
 func (vm *stackSyncViewModel) Init() tea.Cmd {
+	log.Println("init")
 	if vm.askingStackSyncChange && os.Getenv("AV_STACK_SYNC_CHANGE_NO_ASK") != "1" {
 		vm.changeNoticePrompt = uiutils.NewPromptModel(
 			changeNoticePrompt,
@@ -156,6 +159,7 @@ func (vm *stackSyncViewModel) Init() tea.Cmd {
 }
 
 func (vm *stackSyncViewModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	log.Println("update")
 	switch msg := msg.(type) {
 	case spinner.TickMsg:
 		var cmds []tea.Cmd
@@ -169,6 +173,7 @@ func (vm *stackSyncViewModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			vm.restackModel, cmd = vm.restackModel.Update(msg)
 			cmds = append(cmds, cmd)
 		}
+		fmt.Println(vm.githubPushModel)
 		if vm.githubPushModel != nil {
 			var cmd tea.Cmd
 			vm.githubPushModel, cmd = vm.githubPushModel.Update(msg)
@@ -407,6 +412,7 @@ type promptUserShouldSyncAllMsg struct {
 }
 
 func (vm *stackSyncViewModel) initSync() tea.Cmd {
+	log.Println("initSync")
 	state, err := vm.readState()
 	if err != nil {
 		return func() tea.Msg { return err }
