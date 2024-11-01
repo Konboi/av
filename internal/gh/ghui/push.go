@@ -3,6 +3,7 @@ package ghui
 import (
 	"context"
 	"fmt"
+	"log"
 	"strings"
 
 	"emperror.dev/errors"
@@ -544,12 +545,16 @@ func createPRMetadata(branch meta.Branch, vm *GitHubPushModel) actions.PRMetadat
 
 // Compare local metadata with PR metadata for any changes
 func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
+	log.Println("isDifferencePRMetadata")
 	local := createPRMetadata(avbr, vm)
+	log.Println("local:", local)
 
 	prs, err := vm.getPRs()
 	if err != nil {
 		return true
 	}
+
+	log.Println("pr count:", len(prs))
 
 	var pr *gh.PullRequest
 	for _, p := range prs {
@@ -567,6 +572,9 @@ func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
 	if err != nil {
 		return true
 	}
+
+	log.Println("local", local)
+	log.Println("prMeta:", prMeta)
 
 	return local == prMeta
 }
