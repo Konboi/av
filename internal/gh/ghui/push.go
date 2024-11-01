@@ -548,7 +548,7 @@ func createPRMetadata(branch meta.Branch, vm *GitHubPushModel) actions.PRMetadat
 func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
 	log.Println("isDifferencePRMetadata")
 	local := createPRMetadata(avbr, vm)
-	log.Println("local:", local)
+	log.Println("local!!")
 
 	prs, err := vm.getPRs()
 	if err != nil {
@@ -574,8 +574,8 @@ func isDifferencePRMetadata(avbr meta.Branch, vm *GitHubPushModel) bool {
 		return true
 	}
 
-	log.Println("local", local)
-	log.Println("prMeta:", prMeta)
+	log.Println("local")
+	log.Println("prMeta:")
 
 	return local == prMeta
 }
