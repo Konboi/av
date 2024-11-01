@@ -389,6 +389,7 @@ func (vm *GitHubPushModel) undraftPRs(ghPRs map[plumbing.ReferenceName]*gh.PullR
 }
 
 func (vm *GitHubPushModel) calculateChangedBranches() tea.Msg {
+	log.Println("calculateChangedBranches")
 	repo := vm.repo.GoGitRepo()
 	remote, err := repo.Remote(vm.repo.GetRemoteName())
 	if err != nil {
