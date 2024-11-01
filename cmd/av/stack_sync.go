@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -173,7 +172,7 @@ func (vm *stackSyncViewModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			vm.restackModel, cmd = vm.restackModel.Update(msg)
 			cmds = append(cmds, cmd)
 		}
-		fmt.Println(vm.githubPushModel)
+		log.Println("modal:", vm.githubPushModel)
 		if vm.githubPushModel != nil {
 			var cmd tea.Cmd
 			vm.githubPushModel, cmd = vm.githubPushModel.Update(msg)
